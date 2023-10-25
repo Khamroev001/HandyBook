@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HandyBook</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tasdiqlash_tugmasini_bosish_orqali_siz_maxfiylik_siyosati_shartlariga_rozilik_bildirasiz">Tasdiqlash tugmasini bosish orqali siz “Maxfiylik siyosati” shartlariga rozilik bildirasiz!</string>
+    <string name="ism_noto_g_ri_kiritilgan">Ism noto\'g\'ri kiritilgan</string>
+</resources>
