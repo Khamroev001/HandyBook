@@ -1,11 +1,28 @@
 package khamroev.handybook.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import khamroev.handybook.R
+import khamroev.handybook.databinding.FragmentSignUpBinding
+import khamroev.handybook.model.SignUp
+import khamroev.handybook.model.User
+import khamroev.handybook.model.UserToken
+import khamroev.handybook.networking.APIClient
+import khamroev.handybook.networking.APIService
+import khamroev.handybook.utils.SharedPrefHelper
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,15 +46,66 @@ class SignUpFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    lateinit var binding: FragmentSignUpBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding= FragmentSignUpBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
+         var sharedPrefHelper= SharedPrefHelper.getInstance(requireContext())
 
+
+        val api = APIClient.getInstance().create(APIService::class.java)
+        binding.sighupButton.setOnClickListener {
+            if (check()){
+                val login = SignUp(
+                    binding.signupNameEdittext.text.toString(),
+                    binding.signupSurnameEdittext.text.toString(),
+                    binding.signupEmailEdittext.text.toString(),
+                    binding.signupPasswordEdittext.text.toString()
+                )
+                api.signup(login).enqueue(object: Callback<UserToken> {
+                    override fun onResponse(call: Call<UserToken>, response: Response<UserToken>) {
+                       var user= User(response.body()!!.id, response.body()!!.username,
+                           response.body()!!.access_token)
+                       sharedPrefHelper.setUser(user)
+                        findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                    }
+
+                    override fun onFailure(call: Call<UserToken>, t: Throwable) {
+                        findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                    }
+
+                })
+            }
+
+
+        }
+
+
+
+
+        return binding.root
+    }
+      fun check(): Boolean {
+          if (!binding.ischecked.isChecked){
+              Toast.makeText(requireContext(),"Tasdiqlashni bosing",Toast.LENGTH_SHORT).show()
+              return false
+          }
+          if (binding.signupPasswordEdittext.text==binding.signupPasswordRecheckEdittext.text) {
+              Toast.makeText(requireContext(),"Parollar mos kelmayapti",Toast.LENGTH_SHORT).show()
+              binding.signupPasswordEdittext.error="Parollar mos kelmayapti"
+              binding.signupPasswordRecheckEdittext.error="Parollar mos kelmayapti"
+              return false
+          }
+          if(!Patterns.EMAIL_ADDRESS.matcher(binding.signupEmailEdittext.text.toString()).matches()){
+              Toast.makeText(requireContext(),"Email hato",Toast.LENGTH_SHORT).show()
+              binding.signupEmailEdittext.error="Emailni to'g'ri kiriting"
+              return false
+          }
+          return true
+      }
     companion object {
         /**
          * Use this factory method to create a new instance of
