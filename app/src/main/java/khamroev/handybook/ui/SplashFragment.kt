@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import khamroev.handybook.R
 import khamroev.handybook.databinding.FragmentSplashBinding
+import khamroev.handybook.utils.SharedPrefHelper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,6 +40,13 @@ class SplashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var binding=FragmentSplashBinding.inflate(layoutInflater,container,false)
+        var sharedPrefHelper=SharedPrefHelper.getInstance(requireContext())
+
+        if (sharedPrefHelper.getUser()!=null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+            },2000)
+        }
 
         // Inflate the layout for this fragment
 

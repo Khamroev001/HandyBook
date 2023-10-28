@@ -63,6 +63,8 @@ class SignInFragment : Fragment() {
                     sharedPrefHelper.setUser(user)
 
                     findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+
+
                 }
 
                 override fun onFailure(call: Call<UserToken>, t: Throwable) {

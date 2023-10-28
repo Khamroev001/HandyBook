@@ -57,7 +57,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="16dp"
-              android:text="Ism"
+              android:text="Username"
               android:textSize="16sp"
               app:layout_constraintStart_toStartOf="@+id/login_email_edit_acet"
               app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -65,7 +65,7 @@
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="name"
+              android:hint="username"
               app:errorContentDescription="Ism notog'ri kiritilgan"
               app:errorEnabled="true"
               app:errorTextColor="@color/red">
@@ -86,7 +86,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="16dp"
-              android:text="Familiya"
+              android:text="Fullname"
               android:textSize="16sp"
               app:layout_constraintStart_toStartOf="@+id/login_email_edit_acet"
               app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -94,7 +94,7 @@
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="name"
+              android:hint="fullname"
               app:errorContentDescription="Ism notog'ri kiritilgan"
               app:errorEnabled="true"
               app:errorTextColor="@color/red">
@@ -122,7 +122,7 @@
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="name"
+              android:hint="email"
               app:errorContentDescription="Ism notog'ri kiritilgan"
               app:errorEnabled="true"
               app:errorTextColor="@color/red">
@@ -150,7 +150,7 @@
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="name"
+              android:hint="..........."
               app:errorContentDescription="Ism notog'ri kiritilgan"
               app:errorEnabled="true"
               app:errorTextColor="@color/red">
@@ -177,7 +177,7 @@
           <com.google.android.material.textfield.TextInputLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:hint="name"
+              android:hint="..........."
               app:errorContentDescription="Ism notog'ri kiritilgan"
               app:errorEnabled="true"
               app:errorTextColor="@color/red">

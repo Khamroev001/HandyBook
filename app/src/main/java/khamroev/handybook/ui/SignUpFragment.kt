@@ -59,22 +59,25 @@ class SignUpFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         binding.sighupButton.setOnClickListener {
             if (check()){
-                val login = SignUp(
+                val signUp = SignUp(
                     binding.signupNameEdittext.text.toString(),
                     binding.signupSurnameEdittext.text.toString(),
                     binding.signupEmailEdittext.text.toString(),
                     binding.signupPasswordEdittext.text.toString()
                 )
-                api.signup(login).enqueue(object: Callback<UserToken> {
+                api.signup(signUp).enqueue(object: Callback<UserToken> {
                     override fun onResponse(call: Call<UserToken>, response: Response<UserToken>) {
                        var user= User(response.body()!!.id, response.body()!!.username,
                            response.body()!!.access_token)
                        sharedPrefHelper.setUser(user)
+
+
+                        Log.d("USER",user.toString())
                         findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
                     }
 
                     override fun onFailure(call: Call<UserToken>, t: Throwable) {
-                        findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+                        Log.d("ERROR",t.toString())
                     }
 
                 })
@@ -93,10 +96,16 @@ class SignUpFragment : Fragment() {
               Toast.makeText(requireContext(),"Tasdiqlashni bosing",Toast.LENGTH_SHORT).show()
               return false
           }
-          if (binding.signupPasswordEdittext.text==binding.signupPasswordRecheckEdittext.text) {
+          if (binding.signupPasswordEdittext.text.toString()==(binding.signupPasswordRecheckEdittext.text.toString())) {
               Toast.makeText(requireContext(),"Parollar mos kelmayapti",Toast.LENGTH_SHORT).show()
               binding.signupPasswordEdittext.error="Parollar mos kelmayapti"
               binding.signupPasswordRecheckEdittext.error="Parollar mos kelmayapti"
+              return false
+          }
+          if (binding.signupPasswordEdittext.text!!.count()<8 && binding.signupPasswordRecheckEdittext.text!!.count()<8){
+              Toast.makeText(requireContext(),"Parol 8 ta belgidan kam bolmasligi kerak",Toast.LENGTH_SHORT).show()
+              binding.signupPasswordEdittext.error="Parol 8 ta belgidan kam bolmasligi kerak"
+              binding.signupPasswordRecheckEdittext.error="Parol 8 ta belgidan kam bolmasligi kerak"
               return false
           }
           if(!Patterns.EMAIL_ADDRESS.matcher(binding.signupEmailEdittext.text.toString()).matches()){
