@@ -96,7 +96,7 @@ class SignUpFragment : Fragment() {
               Toast.makeText(requireContext(),"Tasdiqlashni bosing",Toast.LENGTH_SHORT).show()
               return false
           }
-          if (binding.signupPasswordEdittext.text.toString()==(binding.signupPasswordRecheckEdittext.text.toString())) {
+          if (binding.signupPasswordEdittext.text.toString()!=(binding.signupPasswordRecheckEdittext.text.toString())) {
               Toast.makeText(requireContext(),"Parollar mos kelmayapti",Toast.LENGTH_SHORT).show()
               binding.signupPasswordEdittext.error="Parollar mos kelmayapti"
               binding.signupPasswordRecheckEdittext.error="Parollar mos kelmayapti"

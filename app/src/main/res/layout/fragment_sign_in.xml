@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Email"
+        android:text="Username"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/login_email_edit_acet"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -66,12 +66,12 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/edit_text_shape"
-        android:hint="abcdef@gmail.com"
+        android:hint="username"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:layout_editor_absoluteX="24dp" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signin_email"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"

@@ -46,14 +46,13 @@ class SplashFragment : Fragment() {
             Handler(Looper.getMainLooper()).postDelayed({
                 findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
             },2000)
-        }
-
+        }else{
         // Inflate the layout for this fragment
-
         Handler(Looper.getMainLooper()).postDelayed({
           findNavController().navigate(R.id.action_splashFragment_to_signInFragment)
         },2000)
 
+    }
         return binding.root
     }
 

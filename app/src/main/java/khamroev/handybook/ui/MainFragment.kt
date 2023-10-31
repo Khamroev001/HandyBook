@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import khamroev.handybook.R
 import khamroev.handybook.databinding.FragmentMainBinding
@@ -26,7 +27,7 @@ class MainFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    lateinit var binding:FragmentMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,14 +40,14 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var binding=FragmentMainBinding.inflate(inflater,container,false)
-        var drawer_layout=R.layout.drawer_menu
-        val toggle = ActionBarDrawerToggle(requireActivity(), drawer_layout, binding.toolbar, R.string.app_name, R.string.app_name)
-        drawer_layout.addDrawerListener(toggle)
+        binding=FragmentMainBinding.inflate(inflater,container,false)
+
+        val toggle = ActionBarDrawerToggle(requireActivity(), binding.drawerLayout, binding.toolbarDrawer, R.string.app_name, R.string.app_name)
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         // Set up item click listener
-        nav_view.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+        binding.navView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
                     // Handle Home item click
@@ -73,29 +74,30 @@ class MainFragment : Fragment() {
                     // Handle Log Out item click
                 }
             }
-            drawer_layout.closeDrawer(GravityCompat.START)
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         })
+
       return binding.root
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-                drawer_layout.closeDrawer(GravityCompat.START)
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
             } else {
-                drawer_layout.openDrawer(GravityCompat.START)
+                binding.drawerLayout.openDrawer(GravityCompat.START)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+//            drawer_layout.closeDrawer(GravityCompat.START)
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
     companion object {
         /**
          * Use this factory method to create a new instance of

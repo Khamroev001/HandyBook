@@ -52,17 +52,21 @@ class SignInFragment : Fragment() {
 
         binding.homeMainBookReadNowMb.setOnClickListener {
             val signin = Signin(
-                binding.signinEmail.text.toString(),
+                binding.username.text.toString(),
                 binding.signinPasswordEdittext.text.toString()
             )
             api.login(signin).enqueue(object: Callback<UserToken> {
                 override fun onResponse(call: Call<UserToken>, response: Response<UserToken>) {
+                    if (response.isSuccessful && response.code()==200 && response.body()!=null){
+                        var user= User(response.body()!!.id, response.body()!!.username,
+                            response.body()!!.access_token)
+                        sharedPrefHelper.setUser(user)
+                        findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
 
-                    var user= User(response.body()!!.id, response.body()!!.username,
-                        response.body()!!.access_token)
-                    sharedPrefHelper.setUser(user)
+                    }
+                    binding.username.error="Username hato kiritilgan"
+                    binding.signinPasswordEdittext.error="Parol hato kiritilgan"
 
-                    findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
 
 
                 }
