@@ -21,7 +21,7 @@ class SharedPrefHelper private constructor(context: Context){
         }
     }
 
-    fun setUser(user: User){
+    fun setUser(user: User?){
         val data  = gson.toJson(user)
         edit.putString("user", data).apply()
     }

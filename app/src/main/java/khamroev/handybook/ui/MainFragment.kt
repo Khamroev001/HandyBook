@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import khamroev.handybook.R
 import khamroev.handybook.databinding.FragmentMainBinding
+import khamroev.handybook.utils.SharedPrefHelper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,7 @@ class MainFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     lateinit var binding:FragmentMainBinding
+    lateinit var sharedPrefHelper:SharedPrefHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,16 +45,20 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentMainBinding.inflate(inflater,container,false)
-
+         sharedPrefHelper=SharedPrefHelper.getInstance(requireContext())
         val toggle = ActionBarDrawerToggle(requireActivity(), binding.drawerLayout, binding.toolbarDrawer, R.string.app_name, R.string.app_name)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        parentFragmentManager.beginTransaction().add(R.id.nav_view, HomeFragment())
+            .commit()
 
         // Set up item click listener
         binding.navView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
-                    // Handle Home item click
+                    parentFragmentManager.beginTransaction().replace(R.id.nav_view, HomeFragment())
+                        .commit()
                 }
                 R.id.menu_search -> {
                     // Handle Search item click
@@ -71,15 +79,41 @@ class MainFragment : Fragment() {
                     // Handle Instagram item click
                 }
                 R.id.menu_logout -> {
-                    // Handle Log Out item click
+                      showBottomSheet()
                 }
             }
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         })
 
+
       return binding.root
     }
+
+
+
+    private fun showBottomSheet() {
+        val bottomSheetView = layoutInflater.inflate(R.layout.logout_bottom_dialog, null)
+        val dialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+        dialog.setContentView(bottomSheetView)
+
+        val cancelButton: Button = bottomSheetView.findViewById(R.id.no)
+        val logoutButton: Button = bottomSheetView.findViewById(R.id.yes)
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        logoutButton.setOnClickListener {
+            sharedPrefHelper.setUser(null)
+            findNavController().navigate(R.id.action_mainFragment_to_signInFragment)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -92,8 +126,8 @@ class MainFragment : Fragment() {
     }
 
 //    override fun onBackPressed() {
-//        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-//            drawer_layout.closeDrawer(GravityCompat.START)
+//        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            binding.drawerLayout.closeDrawer(GravityCompat.START)
 //        } else {
 //            super.onBackPressed()
 //        }

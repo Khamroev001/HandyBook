@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import khamroev.handybook.R
 import khamroev.handybook.databinding.FragmentSignUpBinding
