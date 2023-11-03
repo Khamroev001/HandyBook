@@ -2,6 +2,7 @@ package khamroev.handybook.networking
 
 
 import khamroev.handybook.model.Book
+import khamroev.handybook.model.Category
 import khamroev.handybook.model.SignUp
 import khamroev.handybook.model.Signin
 import khamroev.handybook.model.UserToken
@@ -21,8 +22,9 @@ interface APIService {
 
 //    @GET("/book-api/main-book")
 //    fun getMainBook():Call<Book>
-//    @GET("/book-api/category")
-//    fun getBookByCategory(@Query("name") name:String):Call<List<Book>>
+
+@GET("/book-api/category")
+fun getBookByCategory(@Query("name") name:String):Call<List<Book>>
 
 //    @GET("/book-api/comment")
 //    fun getComments(@Query("id") id: Int):Call<List<Comment>>
@@ -38,4 +40,7 @@ interface APIService {
 
     @GET("/book-api/search-name")
     fun search(@Query("name") name: String):Call<List<Book>>
+
+    @GET("/book-api/all-category")
+    fun getCategories():Call<List<Category>>
 }

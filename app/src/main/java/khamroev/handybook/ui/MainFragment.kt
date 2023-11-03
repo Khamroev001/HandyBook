@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.findNavController
@@ -83,6 +84,15 @@ class MainFragment : Fragment() {
                       showBottomSheet()
                 }
             }
+
+
+            var username=requireActivity().findViewById<TextView>(R.id.user_fullname)
+
+
+            var user=sharedPrefHelper.getUser()
+
+                username.text= user!!.username
+
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         })
