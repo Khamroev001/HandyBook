@@ -46,22 +46,23 @@ class MainFragment : Fragment() {
     ): View? {
         binding=FragmentMainBinding.inflate(inflater,container,false)
          sharedPrefHelper=SharedPrefHelper.getInstance(requireContext())
-        val toggle = ActionBarDrawerToggle(requireActivity(), binding.drawerLayout, binding.toolbarDrawer, R.string.app_name, R.string.app_name)
+        val toggle = ActionBarDrawerToggle(requireActivity(), binding.drawerLayout,R.string.app_name,R.string.app_name)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        parentFragmentManager.beginTransaction().add(R.id.nav_view, HomeFragment())
+        parentFragmentManager.beginTransaction().add(R.id.fragment, HomeFragment())
             .commit()
 
         // Set up item click listener
         binding.navView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_home -> {
-                    parentFragmentManager.beginTransaction().replace(R.id.nav_view, HomeFragment())
+                    parentFragmentManager.beginTransaction().replace(R.id.fragment, HomeFragment())
                         .commit()
                 }
                 R.id.menu_search -> {
-                    // Handle Search item click
+                    parentFragmentManager.beginTransaction().replace(R.id.fragment, SearchFragment())
+                        .commit()
                 }
                 R.id.menu_saved -> {
                     // Handle Saved item click

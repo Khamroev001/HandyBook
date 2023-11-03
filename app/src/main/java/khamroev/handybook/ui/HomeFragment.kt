@@ -5,7 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import khamroev.handybook.R
+import khamroev.handybook.adapter.CategoryAdapter
+import khamroev.handybook.databinding.FragmentHomeBinding
+import khamroev.handybook.model.Category
+import khamroev.handybook.networking.APIClient
+import khamroev.handybook.networking.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +31,8 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var binding: FragmentHomeBinding
+    lateinit var api: APIService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,31 +41,47 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        api = APIClient.getInstance().create(APIService::class.java)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+
+
+
+
+
+
+
+//        binding.homeCategoryRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        api.getCategories().enqueue(object : Callback<List<Category>> {
+//            override fun onResponse(
+//                call: Call<List<Category>>,
+//                response: Response<List<Category>>
+//            ) {
+//                if (!response.isSuccessful) return
+//                binding.homeCategoryRecycler.adapter = CategoryAdapter(response.body()!!, requireContext(), binding.homeCategoryRecycler, object : CategoryAdapter.CategoryPressed{
+//                    override fun onPressed(category: String?) {
+//                        if (category == null){
+//                            setAllBooks(allBooks)
+//                            binding.homeMainBookContainer.visibility = View.VISIBLE
+//                            return
+//                        }
+//                        binding.homeMainBookContainer.visibility = View.GONE
+//                        setCategoryChanger(category)
+//                    }
+//                })
+
+
+
+
+
+
+        // Inflate the layout for this fragment
+        return binding.root
     }
 }

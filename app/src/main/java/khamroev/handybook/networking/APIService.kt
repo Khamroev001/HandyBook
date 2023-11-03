@@ -1,6 +1,7 @@
 package khamroev.handybook.networking
 
 
+import khamroev.handybook.model.Book
 import khamroev.handybook.model.SignUp
 import khamroev.handybook.model.Signin
 import khamroev.handybook.model.UserToken
@@ -12,8 +13,8 @@ import retrofit2.http.Query
 
 
 interface APIService {
-//    @GET("/book-api")
-//    fun getBooks():Call<List<Book>>
+    @GET("/book-api")
+    fun getBooks():Call<List<Book>>
 
 //    @GET("/book-api/view")
 //    fun getBook(@Query("id") id:Int):Call<Book>
@@ -34,4 +35,7 @@ interface APIService {
 
     @POST("/book-api/login")
     fun login(@Body signin: Signin): Call<UserToken>
+
+    @GET("/book-api/search-name")
+    fun search(@Query("name") name: String):Call<List<Book>>
 }
