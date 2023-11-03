@@ -84,6 +84,9 @@ class SignUpFragment : Fragment() {
 
         }
 
+        binding.signupBackButtonIv.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
 
 
 

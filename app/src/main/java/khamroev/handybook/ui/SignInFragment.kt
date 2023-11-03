@@ -85,6 +85,9 @@ class SignInFragment : Fragment() {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
 
           }
+        binding.signupBackButtonIv.setOnClickListener {
+            findNavController().popBackStack()
+        }
         return binding.root
     }
 
